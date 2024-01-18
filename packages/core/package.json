@@ -35,7 +35,8 @@
         "lint:fix": "eslint . --fix",
         "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" \"**/*.json\"",
         "test": "mocha --require ts-node/register --extension ts",
-        "test:content": "mocha --require ts-node/register --extension ts test/ContentSerdesTest.ts"
+        "test:content": "mocha --require ts-node/register --extension ts test/ContentSerdesTest.ts",
+        "postinstall": "tsc --outDir ./build"
     },
     "bugs": {
         "url": "https://github.com/eclipse-thingweb/node-wot/issues"
