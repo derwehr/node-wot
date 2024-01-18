@@ -1,0 +1,37 @@
+import Servient from "./servient";
+import * as TD from "@node-wot/td-tools";
+import * as TDT from "wot-thing-description-types";
+import { ValidateFunction } from "ajv";
+import { DataSchemaValue, ExposedThingInit } from "wot-typescript-definitions";
+import { SomeJSONSchema } from "ajv/dist/types/json-schema";
+import { ThingInteraction } from "@node-wot/td-tools";
+import { Resolver } from "@node-wot/td-tools/src/resolver-interface";
+import { PropertyElement, DataSchema } from "wot-thing-description-types";
+export default class Helpers implements Resolver {
+    static tsSchemaValidator: ValidateFunction<unknown>;
+    private srv;
+    constructor(srv: Servient);
+    private static staticAddress?;
+    static extractScheme(uri: string): string;
+    static setStaticAddress(address: string): void;
+    static getAddresses(): Array<string>;
+    static toUriLiteral(address?: string): string;
+    static generateUniqueName(name: string): string;
+    static toStringArray(input: string[] | string | undefined): string[];
+    fetch(uri: string): Promise<unknown>;
+    static extend<T, U>(first: T, second: U): T & U;
+    static parseInteractionOutput(response: WoT.InteractionOutput): Promise<DataSchemaValue>;
+    static createExposeThingInitSchema(tdSchema: unknown): SomeJSONSchema;
+    static validateExposedThingInit(data: ExposedThingInit): {
+        valid: boolean;
+        errors?: string;
+    };
+    static parseInteractionOptions(thing: TDT.ThingDescription, ti: ThingInteraction, options?: WoT.InteractionOptions): WoT.InteractionOptions;
+    static validateInteractionOptions(thing: TD.Thing, ti: ThingInteraction, options?: WoT.InteractionOptions): boolean;
+    static parseUrlParameters(url: string | undefined, globalUriVariables?: {
+        [key: string]: TD.DataSchema;
+    }, uriVariables?: {
+        [k: string]: DataSchema;
+    }): Record<string, unknown>;
+    static updateInteractionNameWithUriVariablePattern(interactionName: string, affordanceUriVariables?: PropertyElement["uriVariables"], thingUriVariables?: PropertyElement["uriVariables"]): string;
+}

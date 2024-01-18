@@ -1,0 +1,11 @@
+/// <reference types="node" />
+/// <reference types="node" />
+export declare class Content {
+    type: string;
+    body: NodeJS.ReadableStream;
+    constructor(type: string, body: NodeJS.ReadableStream);
+    toBuffer(): Promise<Buffer>;
+}
+export declare class DefaultContent extends Content {
+    constructor(body: NodeJS.ReadableStream);
+}
