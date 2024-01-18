@@ -711,6 +711,20 @@ class SerdesOctetTests {
         expect(body).to.deep.equal(Buffer.concat([Buffer.from([0x00]), Buffer.from(longString)]));
 
         content = ContentSerdes.valueToContent(
+            { bool: true },
+            {
+                type: "object",
+                properties: {
+                    bool: { type: "boolean", "ex:bitOffset": 0, "ex:bitLength": 1 },
+                    bool2: { type: "boolean", "ex:bitOffset": 1, "ex:bitLength": 1, default: true },
+                }
+            },
+            `application/octet-stream;length=1;`
+        );
+        body = await content.toBuffer();
+        expect(body).to.deep.equal(Buffer.from([0xC0]));
+
+        content = ContentSerdes.valueToContent(
             { deepCascased: { level1: { level2: { level3: { bool: true, level4: { bool: true, bool2: false } } } } } },
             {
                 type: "object",
