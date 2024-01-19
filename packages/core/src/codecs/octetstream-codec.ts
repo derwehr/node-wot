@@ -550,7 +550,7 @@ export default class OctetstreamCodec implements ContentCodec {
             let buf: Buffer;
             if (propertySchema.type === "object") {
                 const length = Math.ceil(propertyLength).toString();
-                buf = this.valueToObject(propertyValue, propertySchema, {length, ...parameters}, result);
+                buf = this.valueToObject(propertyValue, propertySchema, {...parameters, length}, result);
             } else {
                 buf = this.valueToBytes(propertyValue, propertySchema, parameters);
             }
