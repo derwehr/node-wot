@@ -645,7 +645,8 @@ class SerdesOctetTests {
                     },
                 },
                 required: ["row1", "row2", "row3", "row4", "row5"],
-            }
+            },
+            { length: "5"}
         );
     }
 

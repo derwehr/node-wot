@@ -215,21 +215,19 @@ export default class OctetstreamCodec implements ContentCodec {
         for (const propertyName of sortedProperties) {
             const propertySchema = schema.properties[propertyName];
             if (propertySchema.type === "object") {
-                const bitLength =
-                    propertySchema["ex:bitLength"] !== undefined
-                        ? parseInt(propertySchema["ex:bitLength"])
-                        : bytes.length * 8;
+                const bitLength = parseInt(propertySchema["ex:bitLength"])
                 const bitOffset =
                     propertySchema["ex:bitOffset"] !== undefined ? parseInt(propertySchema["ex:bitOffset"]) : 0;
-                const length = Math.ceil(bitLength / 8);
+                const length = isNaN(bitLength) ? bytes.length : Math.ceil(bitLength / 8);
                 const buf = Buffer.alloc(length);
-                this.copyBits(bytes, parseInt(propertySchema["ex:bitOffset"]), buf, bitOffset, length * 8);
+                this.copyBits(bytes, bitOffset, buf, 0, length * 8);
                 result[propertyName] = this.objectToValue(buf, propertySchema, {
                     ...parameters,
                     length: length.toString(),
                 });
+            } else {
+                result[propertyName] = this.bytesToValue(bytes, propertySchema, parameters);
             }
-            result[propertyName] = this.bytesToValue(bytes, propertySchema, parameters);
         }
         return result;
     }
