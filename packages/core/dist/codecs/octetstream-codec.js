@@ -131,7 +131,17 @@ class OctetstreamCodec {
         const sortedProperties = Object.getOwnPropertyNames(schema.properties);
         for (const propertyName of sortedProperties) {
             const propertySchema = schema.properties[propertyName];
-            result[propertyName] = this.bytesToValue(bytes, propertySchema, parameters);
+            if (propertySchema.type === "object") {
+                const bitLength = parseInt(propertySchema["ex:bitLength"]);
+                const bitOffset = propertySchema["ex:bitOffset"] !== undefined ? parseInt(propertySchema["ex:bitOffset"]) : 0;
+                const length = isNaN(bitLength) ? bytes.length : Math.ceil(bitLength / 8);
+                const buf = Buffer.alloc(length);
+                this.copyBits(bytes, bitOffset, buf, 0, length * 8);
+                result[propertyName] = this.objectToValue(buf, propertySchema, Object.assign(Object.assign({}, parameters), { length: length.toString() }));
+            }
+            else {
+                result[propertyName] = this.bytesToValue(bytes, propertySchema, parameters);
+            }
         }
         return result;
     }
@@ -393,7 +403,8 @@ class OctetstreamCodec {
             const propertyLength = parseInt(propertySchema["ex:bitLength"]);
             let buf;
             if (propertySchema.type === "object") {
-                buf = this.valueToObject(propertyValue, propertySchema, parameters, result);
+                const length = Math.ceil(propertyLength / 8).toString();
+                buf = this.valueToObject(propertyValue, propertySchema, Object.assign(Object.assign({}, parameters), { length }), result);
             }
             else {
                 buf = this.valueToBytes(propertyValue, propertySchema, parameters);

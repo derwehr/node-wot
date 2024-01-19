@@ -215,7 +215,7 @@ export default class OctetstreamCodec implements ContentCodec {
         for (const propertyName of sortedProperties) {
             const propertySchema = schema.properties[propertyName];
             if (propertySchema.type === "object") {
-                const bitLength = parseInt(propertySchema["ex:bitLength"])
+                const bitLength = parseInt(propertySchema["ex:bitLength"]);
                 const bitOffset =
                     propertySchema["ex:bitOffset"] !== undefined ? parseInt(propertySchema["ex:bitOffset"]) : 0;
                 const length = isNaN(bitLength) ? bytes.length : Math.ceil(bitLength / 8);
