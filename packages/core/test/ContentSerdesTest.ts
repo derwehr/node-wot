@@ -444,6 +444,209 @@ class SerdesOctetTests {
                 },
             }
         );
+
+        checkStreamToValue(
+            [0x0e, 0x10, 0x10, 0x10, 0x0e],
+            {
+                row1: { led1: false, led2: true, led3: true, led4: true, led5: false },
+                row2: { led1: true, led2: false, led3: false, led4: false, led5: false },
+                row3: { led1: true, led2: false, led3: false, led4: false, led5: false },
+                row4: { led1: true, led2: false, led3: false, led4: false, led5: false },
+                row5: { led1: false, led2: true, led3: true, led4: true, led5: false },
+            },
+            "object",
+            {
+                type: "object",
+                properties: {
+                    row1: {
+                        type: "object",
+                        "ex:bitOffset": 0,
+                        "ex:bitLength": 8,
+                        properties: {
+                            led1: {
+                                type: "boolean",
+                                title: "LED 1",
+                                "ex:bitOffset": 3,
+                                "ex:bitLength": 1,
+                            },
+                            led2: {
+                                type: "boolean",
+                                title: "LED 2",
+                                "ex:bitOffset": 4,
+                                "ex:bitLength": 1,
+                            },
+                            led3: {
+                                type: "boolean",
+                                title: "LED 3",
+                                "ex:bitOffset": 5,
+                                "ex:bitLength": 1,
+                            },
+                            led4: {
+                                type: "boolean",
+                                title: "LED 4",
+                                "ex:bitOffset": 6,
+                                "ex:bitLength": 1,
+                            },
+                            led5: {
+                                type: "boolean",
+                                title: "LED 5",
+                                "ex:bitOffset": 7,
+                                "ex:bitLength": 1,
+                            },
+                        },
+                    },
+                    row2: {
+                        type: "object",
+                        "ex:bitOffset": 8,
+                        "ex:bitLength": 8,
+                        properties: {
+                            led1: {
+                                type: "boolean",
+                                title: "LED 1",
+                                "ex:bitOffset": 3,
+                                "ex:bitLength": 1,
+                            },
+                            led2: {
+                                type: "boolean",
+                                title: "LED 2",
+                                "ex:bitOffset": 4,
+                                "ex:bitLength": 1,
+                            },
+                            led3: {
+                                type: "boolean",
+                                title: "LED 3",
+                                "ex:bitOffset": 5,
+                                "ex:bitLength": 1,
+                            },
+                            led4: {
+                                type: "boolean",
+                                title: "LED 4",
+                                "ex:bitOffset": 6,
+                                "ex:bitLength": 1,
+                            },
+                            led5: {
+                                type: "boolean",
+                                title: "LED 5",
+                                "ex:bitOffset": 7,
+                                "ex:bitLength": 1,
+                            },
+                        },
+                    },
+                    row3: {
+                        type: "object",
+                        "ex:bitOffset": 16,
+                        "ex:bitLength": 8,
+                        properties: {
+                            led1: {
+                                type: "boolean",
+                                title: "LED 1",
+                                "ex:bitOffset": 3,
+                                "ex:bitLength": 1,
+                            },
+                            led2: {
+                                type: "boolean",
+                                title: "LED 2",
+                                "ex:bitOffset": 4,
+                                "ex:bitLength": 1,
+                            },
+                            led3: {
+                                type: "boolean",
+                                title: "LED 3",
+                                "ex:bitOffset": 5,
+                                "ex:bitLength": 1,
+                            },
+                            led4: {
+                                type: "boolean",
+                                title: "LED 4",
+                                "ex:bitOffset": 6,
+                                "ex:bitLength": 1,
+                            },
+                            led5: {
+                                type: "boolean",
+                                title: "LED 5",
+                                "ex:bitOffset": 7,
+                                "ex:bitLength": 1,
+                            },
+                        },
+                    },
+                    row4: {
+                        type: "object",
+                        "ex:bitOffset": 24,
+                        "ex:bitLength": 8,
+                        properties: {
+                            led1: {
+                                type: "boolean",
+                                title: "LED 1",
+                                "ex:bitOffset": 3,
+                                "ex:bitLength": 1,
+                            },
+                            led2: {
+                                type: "boolean",
+                                title: "LED 2",
+                                "ex:bitOffset": 4,
+                                "ex:bitLength": 1,
+                            },
+                            led3: {
+                                type: "boolean",
+                                title: "LED 3",
+                                "ex:bitOffset": 5,
+                                "ex:bitLength": 1,
+                            },
+                            led4: {
+                                type: "boolean",
+                                title: "LED 4",
+                                "ex:bitOffset": 6,
+                                "ex:bitLength": 1,
+                            },
+                            led5: {
+                                type: "boolean",
+                                title: "LED 5",
+                                "ex:bitOffset": 7,
+                                "ex:bitLength": 1,
+                            },
+                        },
+                    },
+                    row5: {
+                        type: "object",
+                        "ex:bitOffset": 32,
+                        "ex:bitLength": 8,
+                        properties: {
+                            led1: {
+                                type: "boolean",
+                                title: "LED 1",
+                                "ex:bitOffset": 3,
+                                "ex:bitLength": 1,
+                            },
+                            led2: {
+                                type: "boolean",
+                                title: "LED 2",
+                                "ex:bitOffset": 4,
+                                "ex:bitLength": 1,
+                            },
+                            led3: {
+                                type: "boolean",
+                                title: "LED 3",
+                                "ex:bitOffset": 5,
+                                "ex:bitLength": 1,
+                            },
+                            led4: {
+                                type: "boolean",
+                                title: "LED 4",
+                                "ex:bitOffset": 6,
+                                "ex:bitLength": 1,
+                            },
+                            led5: {
+                                type: "boolean",
+                                title: "LED 5",
+                                "ex:bitOffset": 7,
+                                "ex:bitLength": 1,
+                            },
+                        },
+                    },
+                },
+                required: ["row1", "row2", "row3", "row4", "row5"],
+            }
+        );
     }
 
     @test async "OctetStream to value should throw"() {
@@ -515,7 +718,7 @@ class SerdesOctetTests {
         ).to.throw(Error, "Missing schema for object");
         expect(() =>
             ContentSerdes.contentToValue(
-                { type: "application/octet-stream", body: Buffer.from([0x36, 0x30]) },
+                { type: "application/octet-stream;length=2", body: Buffer.from([0x36, 0x30]) },
                 {
                     type: "object",
                     properties: {
@@ -717,12 +920,12 @@ class SerdesOctetTests {
                 properties: {
                     bool: { type: "boolean", "ex:bitOffset": 0, "ex:bitLength": 1 },
                     bool2: { type: "boolean", "ex:bitOffset": 1, "ex:bitLength": 1, default: true },
-                }
+                },
             },
             `application/octet-stream;length=1;`
         );
         body = await content.toBuffer();
-        expect(body).to.deep.equal(Buffer.from([0xC0]));
+        expect(body).to.deep.equal(Buffer.from([0xc0]));
 
         content = ContentSerdes.valueToContent(
             { deepCascased: { level1: { level2: { level3: { bool: true, level4: { bool: true, bool2: false } } } } } },

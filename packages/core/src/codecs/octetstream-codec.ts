@@ -214,8 +214,22 @@ export default class OctetstreamCodec implements ContentCodec {
         const sortedProperties = Object.getOwnPropertyNames(schema.properties);
         for (const propertyName of sortedProperties) {
             const propertySchema = schema.properties[propertyName];
-            const length = Math.ceil(parseInt(propertySchema["ex:bitLength"]) / 8).toString();
-            result[propertyName] = this.bytesToValue(bytes, propertySchema, {...parameters, length});
+            if (propertySchema.type === "object") {
+                const bitLength =
+                    propertySchema["ex:bitLength"] !== undefined
+                        ? parseInt(propertySchema["ex:bitLength"])
+                        : bytes.length * 8;
+                const bitOffset =
+                    propertySchema["ex:bitOffset"] !== undefined ? parseInt(propertySchema["ex:bitOffset"]) : 0;
+                const length = Math.ceil(bitLength / 8);
+                const buf = Buffer.alloc(length);
+                this.copyBits(bytes, parseInt(propertySchema["ex:bitOffset"]), buf, bitOffset, length * 8);
+                result[propertyName] = this.objectToValue(buf, propertySchema, {
+                    ...parameters,
+                    length: length.toString(),
+                });
+            }
+            result[propertyName] = this.bytesToValue(bytes, propertySchema, parameters);
         }
         return result;
     }
@@ -551,7 +565,7 @@ export default class OctetstreamCodec implements ContentCodec {
             let buf: Buffer;
             if (propertySchema.type === "object") {
                 const length = Math.ceil(propertyLength / 8).toString();
-                buf = this.valueToObject(propertyValue, propertySchema, {...parameters, length}, result);
+                buf = this.valueToObject(propertyValue, propertySchema, { ...parameters, length }, result);
             } else {
                 buf = this.valueToBytes(propertyValue, propertySchema, parameters);
             }
