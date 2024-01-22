@@ -648,6 +648,34 @@ class SerdesOctetTests {
             },
             { length: "5" }
         );
+
+        checkStreamToValue(
+            [0x2c, 0x00, 0x44, 0x00, 0xc4, 0xfb],
+            { x: 0.0625, y: 4, z: -4.98046875 },
+            "object",
+            {
+                type: "object",
+                properties: {
+                    x: { type: "number", "ex:bitOffset": 0, "ex:bitLength": 16 },
+                    y: { type: "number", "ex:bitOffset": 16, "ex:bitLength": 16 },
+                    z: { type: "number", "ex:bitOffset": 32, "ex:bitLength": 16 },
+                },
+            },
+            { length: "6" }
+        );
+
+        checkStreamToValue(
+            [0x0e, 0x08],
+            { temp: 17.96 },
+            "object",
+            {
+                type: "object",
+                properties: {
+                    temp: { type: "number", "ex:bitOffset": 0, "ex:bitLength": 16, "scale": 0.005 },
+                },
+            },
+            { length: "2" }
+        )
     }
 
     @test async "OctetStream to value should throw"() {

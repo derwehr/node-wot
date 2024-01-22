@@ -125,6 +125,9 @@ export default class OctetstreamCodec implements ContentCodec {
             case "float":
             case "double":
             case "number":
+                if (schema?.scale !== undefined) {
+                    return this.integerToValue(bytes, { dataLength: bitLength, bigEndian, signed }) * schema.scale;
+                }
                 return this.numberToValue(bytes, { dataLength: bitLength, bigEndian });
             case "string":
                 return bytes.toString(parameters.charset as BufferEncoding);
