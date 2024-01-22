@@ -61,6 +61,7 @@ export default class OctetstreamCodec implements ContentCodec {
 
         const bigEndian = !(parameters.byteSeq?.includes(Endianness.LITTLE_ENDIAN) === true); // default to big endian
         let signed = parameters.signed !== "false"; // default to signed
+        signed = schema?.signed ?? signed;
         const offset = schema?.["ex:bitOffset"] !== undefined ? parseInt(schema["ex:bitOffset"]) : 0;
         if (parameters.length != null && parseInt(parameters.length) !== bytes.length) {
             throw new Error("Lengths do not match, required: " + parameters.length + " provided: " + bytes.length);

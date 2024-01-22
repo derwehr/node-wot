@@ -9,11 +9,12 @@ class OctetstreamCodec {
         return "application/octet-stream";
     }
     bytesToValue(bytes, schema, parameters = {}) {
-        var _a, _b, _c;
+        var _a, _b, _c, _d;
         debug("OctetstreamCodec parsing", bytes);
         debug("Parameters", parameters);
         const bigEndian = !(((_a = parameters.byteSeq) === null || _a === void 0 ? void 0 : _a.includes(protocol_interfaces_1.Endianness.LITTLE_ENDIAN)) === true);
         let signed = parameters.signed !== "false";
+        signed = (_b = schema === null || schema === void 0 ? void 0 : schema.signed) !== null && _b !== void 0 ? _b : signed;
         const offset = (schema === null || schema === void 0 ? void 0 : schema["ex:bitOffset"]) !== undefined ? parseInt(schema["ex:bitOffset"]) : 0;
         if (parameters.length != null && parseInt(parameters.length) !== bytes.length) {
             throw new Error("Lengths do not match, required: " + parameters.length + " provided: " + bytes.length);
@@ -34,14 +35,14 @@ class OctetstreamCodec {
                 }
                 dataType = typeSem[2];
                 if (parseInt(typeSem[3]) !== bitLength) {
-                    throw new Error(`Type is '${((_b = typeSem[1]) !== null && _b !== void 0 ? _b : "") + typeSem[2] + typeSem[3]}' but 'ex:bitLength' is ` + bitLength);
+                    throw new Error(`Type is '${((_c = typeSem[1]) !== null && _c !== void 0 ? _c : "") + typeSem[2] + typeSem[3]}' but 'ex:bitLength' is ` + bitLength);
                 }
             }
         }
         if (bitLength > bytes.length * 8 - offset) {
             throw new Error(`'ex:bitLength' is ${bitLength}, but buffer length at offset ${offset} is ${bytes.length * 8 - offset}`);
         }
-        if (((_c = parameters === null || parameters === void 0 ? void 0 : parameters.byteSeq) === null || _c === void 0 ? void 0 : _c.includes("BYTE_SWAP")) === true && bytes.length > 1) {
+        if (((_d = parameters === null || parameters === void 0 ? void 0 : parameters.byteSeq) === null || _d === void 0 ? void 0 : _d.includes("BYTE_SWAP")) === true && bytes.length > 1) {
             bytes.swap16();
         }
         if (offset !== undefined && bitLength < bytes.length * 8) {
