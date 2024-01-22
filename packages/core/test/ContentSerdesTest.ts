@@ -671,11 +671,11 @@ class SerdesOctetTests {
             {
                 type: "object",
                 properties: {
-                    temp: { type: "number", "ex:bitOffset": 0, "ex:bitLength": 16, "scale": 0.005 },
+                    temp: { type: "number", "ex:bitOffset": 0, "ex:bitLength": 16, scale: 0.005 },
                 },
             },
             { length: "2" }
-        )
+        );
     }
 
     @test async "OctetStream to value should throw"() {
