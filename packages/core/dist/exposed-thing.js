@@ -45,7 +45,7 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-var _ExposedThing_propertyHandlers, _ExposedThing_actionHandlers, _ExposedThing_eventHandlers, _ExposedThing_propertyListeners, _ExposedThing_eventListeners, _ExposedThing_servient;
+var _ExposedThing_propertyHandlers, _ExposedThing_actionHandlers, _ExposedThing_eventHandlers, _ExposedThing_propertyListeners, _ExposedThing_servient;
 Object.defineProperty(exports, "__esModule", { value: true });
 const TD = __importStar(require("@node-wot/td-tools"));
 const helpers_1 = __importDefault(require("./helpers"));
@@ -66,7 +66,7 @@ class ExposedThing extends TD.Thing {
         _ExposedThing_actionHandlers.set(this, new Map());
         _ExposedThing_eventHandlers.set(this, new Map());
         _ExposedThing_propertyListeners.set(this, new protocol_listener_registry_1.default());
-        _ExposedThing_eventListeners.set(this, new protocol_listener_registry_1.default());
+        this.__eventListeners = new protocol_listener_registry_1.default();
         _ExposedThing_servient.set(this, void 0);
         __classPrivateFieldSet(this, _ExposedThing_servient, servient, "f");
         this.id = (_a = thingModel.id) !== null && _a !== void 0 ? _a : "";
@@ -86,7 +86,7 @@ class ExposedThing extends TD.Thing {
     emitEvent(name, data) {
         if (this.events[name] != null) {
             const eventAffordance = this.events[name];
-            __classPrivateFieldGet(this, _ExposedThing_eventListeners, "f").notify(eventAffordance, data, eventAffordance.data);
+            this.__eventListeners.notify(eventAffordance, data, eventAffordance.data);
         }
         else {
             throw new Error("NotFoundError for event '" + name + "'");
@@ -124,7 +124,7 @@ class ExposedThing extends TD.Thing {
         return __awaiter(this, void 0, void 0, function* () {
             debug(`ExposedThing '${this.title}' destroying the thing and its interactions`);
             yield __classPrivateFieldGet(this, _ExposedThing_servient, "f").destroyThing(this.id);
-            __classPrivateFieldGet(this, _ExposedThing_eventListeners, "f").unregisterAll();
+            this.__eventListeners.unregisterAll();
             __classPrivateFieldGet(this, _ExposedThing_propertyListeners, "f").unregisterAll();
             __classPrivateFieldGet(this, _ExposedThing_eventHandlers, "f").clear();
             __classPrivateFieldGet(this, _ExposedThing_propertyHandlers, "f").clear();
@@ -391,7 +391,7 @@ class ExposedThing extends TD.Thing {
                 helpers_1.default.validateInteractionOptions(this, this.events[name], options);
                 const formIndex = protocol_helpers_1.default.getFormIndexForOperation(this.events[name], "event", "subscribeevent", options.formIndex);
                 if (formIndex !== -1) {
-                    __classPrivateFieldGet(this, _ExposedThing_eventListeners, "f").register(this.events[name], formIndex, listener);
+                    this.__eventListeners.register(this.events[name], formIndex, listener);
                     debug(`ExposedThing '${this.title}' subscribes to event '${name}'`);
                 }
                 else {
@@ -414,7 +414,7 @@ class ExposedThing extends TD.Thing {
             helpers_1.default.validateInteractionOptions(this, this.events[name], options);
             const formIndex = protocol_helpers_1.default.getFormIndexForOperation(this.events[name], "event", "unsubscribeevent", options.formIndex);
             if (formIndex !== -1) {
-                __classPrivateFieldGet(this, _ExposedThing_eventListeners, "f").unregister(this.events[name], formIndex, listener);
+                this.__eventListeners.unregister(this.events[name], formIndex, listener);
             }
             else {
                 throw new Error(`ExposedThing '${this.title}', no event listener from found for '${name}' with form index '${options.formIndex}'`);
@@ -490,5 +490,5 @@ class ExposedThing extends TD.Thing {
     }
 }
 exports.default = ExposedThing;
-_ExposedThing_propertyHandlers = new WeakMap(), _ExposedThing_actionHandlers = new WeakMap(), _ExposedThing_eventHandlers = new WeakMap(), _ExposedThing_propertyListeners = new WeakMap(), _ExposedThing_eventListeners = new WeakMap(), _ExposedThing_servient = new WeakMap();
+_ExposedThing_propertyHandlers = new WeakMap(), _ExposedThing_actionHandlers = new WeakMap(), _ExposedThing_eventHandlers = new WeakMap(), _ExposedThing_propertyListeners = new WeakMap(), _ExposedThing_servient = new WeakMap();
 //# sourceMappingURL=exposed-thing.js.map

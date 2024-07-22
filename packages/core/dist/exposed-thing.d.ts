@@ -4,6 +4,7 @@ import * as TD from "@node-wot/td-tools";
 import Servient from "./servient";
 import { Content, PropertyContentMap } from "./core";
 import { ContentListener } from "./protocol-interfaces";
+import ProtocolListenerRegistry from "./protocol-listener-registry";
 export default class ExposedThing extends TD.Thing implements WoT.ExposedThing {
     #private;
     security: string | [string, ...string[]];
@@ -23,6 +24,7 @@ export default class ExposedThing extends TD.Thing implements WoT.ExposedThing {
     events: {
         [key: string]: TDT.EventElement;
     };
+    __eventListeners: ProtocolListenerRegistry;
     constructor(servient: Servient, thingModel?: WoT.ExposedThingInit);
     getThingDescription(): WoT.ThingDescription;
     emitEvent(name: string, data: WoT.InteractionInput): void;
